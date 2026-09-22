@@ -8,7 +8,14 @@ const adminSchema = new mongoose.Schema(
             unique: true,
             trim: true
         },
-
+          email: {
+      type: String,
+      required: [true, 'Email is required'],
+      unique: true,
+      trim: true,
+      lowercase: true,
+      match: [/^\S+@\S+\.\S+$/, 'Enter a valid email address'],
+    },
         passwordHash: {
             type: String,
             required: true
@@ -17,11 +24,16 @@ const adminSchema = new mongoose.Schema(
         role: {
             type: String,
             default: "staff"
-        }
+        },
+        status: {
+      type: String,
+      enum: ['active', 'suspended'],
+      default: 'active',
+    }
     },
     {
         timestamps: true
-    }
+    },
 );
 
 const Admin = mongoose.model("Admin", adminSchema);
