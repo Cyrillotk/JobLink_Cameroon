@@ -3,7 +3,6 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
 const methodOverride = require('method-override');
 
 const connectDB = require('./config/db');
@@ -21,22 +20,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Behind Render's proxy, so secure cookies are set correctly in production.
-if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
-
 app.use(
   session({
-    name: 'joblink.sid',
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
-    cookie: {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 1000 * 60 * 60 * 8,
-    },
+    saveUninitialized: false
   })
 );
 

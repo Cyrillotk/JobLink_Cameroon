@@ -31,7 +31,7 @@ const jobSchema = new mongoose.Schema(
             },
          deadline: {
               type: Date,
-              required: [true, 'Application deadline is required'],
+              required: true,
             },
             employer: {
               type: mongoose.Schema.Types.ObjectId,

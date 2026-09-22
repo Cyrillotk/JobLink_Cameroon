@@ -9,13 +9,13 @@ const userSchema = new mongoose.Schema(
             trim: true
         },
         email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
-      match: /^\S+@\S+\.\S+$/
-    },
+            type: String,
+            required: true,
+            unique: true,
+            trim: true,
+            lowercase: true,
+            match: /^\S+@\S+\.\S+$/
+        },
         passwordHash: {
             type: String,
             required: true
@@ -26,10 +26,10 @@ const userSchema = new mongoose.Schema(
             default: "staff"
         },
         status: {
-      type: String,
-      enum: ['active', 'suspended'],
-      default: 'active',
-    }
+            type: String,
+            enum: ['active', 'suspended'],
+            default: 'active',
+        }
     },
     {
         timestamps: true
