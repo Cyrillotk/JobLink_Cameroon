@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const User = require('../models/User');
 const Employer = require('../models/Employer');
 const JobSeeker = require('../models/JobSeeker');
@@ -7,7 +6,6 @@ const { ROLES } = require('../config/constants');
 
 class ServiceError extends Error {}
 
-// Creates the account and its matching profile in one transaction-like flow.
 async function register({ username, email, password, role, companyName, name, location }) {
   if (await userRepo.findByEmail(email)) {
     throw new ServiceError('That email is already registered.');
@@ -44,7 +42,6 @@ async function register({ username, email, password, role, companyName, name, lo
 
 async function login(identifier, password) {
   const user = await userRepo.findByEmailOrUsername(identifier);
-  // Same message either way, so the form cannot be used to discover accounts.
   if (!user) throw new ServiceError('Those sign-in details did not match an account.');
   if (user.status !== 'active') throw new ServiceError('That account is suspended.');
 
@@ -54,7 +51,6 @@ async function login(identifier, password) {
   return user;
 }
 
-// The only place the session shape is defined.
 async function sessionPayload(user) {
   const payload = {
     id: user._id.toString(),
