@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { JOB_TYPES, JOB_STATUS } = require("../config/constants");
 
 const employerSchema = new mongoose.Schema(
     {

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const { APPLICATION_STATUS } = require('../config/constants');
 const applicationSchema = new mongoose.Schema(
   {
     jobSeeker: {
