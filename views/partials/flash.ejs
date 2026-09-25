@@ -1,0 +1,6 @@
+<% if (typeof success !== 'undefined' && success) { %>
+  <p class="notice notice-success" role="status"><%= success %></p>
+<% } %>
+<% if (typeof error !== 'undefined' && error) { %>
+  <p class="notice notice-error" role="alert"><%= error %></p>
+<% } %>

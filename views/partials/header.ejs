@@ -1,0 +1,23 @@
+<header class="site-header">
+  <a class="brand" href="/">JobLink<span>Cameroon</span></a>
+  <nav>
+    <% if (currentUser) { %>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/jobs">Jobs</a>
+      <% if (currentUser.role === ROLES.EMPLOYER) { %>
+        <a href="/jobs/mine">My listings</a>
+      <% } else if (currentUser.role === ROLES.JOBSEEKER) { %>
+        <a href="/applications">My applications</a>
+      <% } %>
+      <form action="/logout" method="POST" class="inline">
+        <button type="submit" class="link-button">Sign out</button>
+      </form>
+    <% } else { %>
+      <a href="/jobs">Browse jobs</a>
+      <a href="/login">Sign in</a>
+      <a href="/register" class="button small">Create account</a>
+    <% } %>
+  </nav>
+</header>
+<main>
+<%- include('flash') %>
