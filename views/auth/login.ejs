@@ -1,0 +1,19 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<section class="form-page">
+  <h1>SIGN IN</h1>
+
+  <form action="/login" method="POST" novalidate>
+    <label for="identifier">Username/Email</label>
+    <input id="identifier" name="identifier" type="text" required>
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" required>
+
+    <button type="submit" class="button">Sign in</button>
+    </form>
+    <p class="aside">No account registered yet! <a href="/register">Create an account</a>.</p>
+</section>
+
+<%- include('../partials/footer')%>

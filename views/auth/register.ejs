@@ -2,15 +2,15 @@
 <%- include('../partials/header') %>
 
 <section class="form-page">
-  <h1>Create an account</h1>
+  <h1>CREATE ACCOUNT</h1>
 
   <form action="/register" method="POST" novalidate>
     <fieldset class="roles">
-      <legend>What brings you here?</legend>
+      <legend>Choose your role</legend>
       <label class="role-option">
         <input type="radio" name="role" value="<%= roles.JOBSEEKER %>"
           <%= formData.role === roles.EMPLOYER ? '' : 'checked' %>>
-        <span>I am looking for a job or internship</span>
+        <span>I am looking for a job opportunity/internship</span>
       </label>
       <label class="role-option">
         <input type="radio" name="role" value="<%= roles.EMPLOYER %>"
@@ -52,7 +52,7 @@
   </form>
   <p class="aside">Already registered? <a href="/login">Sign in</a>.</p>
 </section>
-
+// to decide which role fields to show based on the selected role, and hide the others. It also initializes the visibility of the role fields when the page loads.
 <script>
   const radios = document.querySelectorAll('input[name="role"]');
   const groups = document.querySelectorAll('.role-fields');

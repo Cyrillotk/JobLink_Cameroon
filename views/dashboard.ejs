@@ -1,0 +1,53 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<h1>Hello, <%= currentUser.displayName %></h1>
+
+<ul class="stats">
+  <% stats.forEach(function (stat) { %>
+    <li>
+      <span class="stat-value"><%= stat.value %></span>
+      <span class="stat-label"><%= stat.label %></span>
+    </li>
+  <% }); %>
+</ul>
+
+<section>
+  <h2>Latest activity</h2>
+  <% if (!recent.length) { %>
+    <p class="empty">
+      <% if (currentUser.role === ROLES.EMPLOYER) { %>
+        No applications yet. <a href="/jobs/new">Post your first listing</a> to start receiving them.
+      <% } else if (currentUser.role === ROLES.JOBSEEKER) { %>
+        You have not applied anywhere yet. <a href="/jobs">Browse open roles</a>.
+      <% } else { %>
+        Nothing recorded yet.
+      <% } %>
+    </p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Role</th>
+          <% if (currentUser.role === ROLES.EMPLOYER) { %><th>Applicant</th><% } %>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% recent.forEach(function (app) { %>
+          <tr>
+            <td><a href="/applications/<%= app._id %>"><%= app.job ? app.job.title : 'Removed listing' %></a></td>
+            <% if (currentUser.role === ROLES.EMPLOYER) { %>
+              <td><%= app.jobSeeker ? app.jobSeeker.name : 'Unknown' %></td>
+            <% } %>
+            <td><span class="pill pill-<%= app.status.toLowerCase() %>"><%= app.status %></span></td>
+            <td><%= app.date.toDateString() %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>
