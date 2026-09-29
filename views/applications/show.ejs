@@ -17,6 +17,16 @@
     <% if (application.jobSeeker.skills && application.jobSeeker.skills.length) { %>
       <p>Skills: <%= application.jobSeeker.skills.join(', ') %></p>
     <% } %>
+
+    <h2>Update status</h2>
+    <form action="/applications/<%= application._id %>/status?_method=PUT" method="POST" class="inline-form">
+      <select name="status">
+        <% ['Pending','Reviewed','Shortlisted','Accepted','Rejected'].forEach(function (s) { %>
+          <option value="<%= s %>" <%= application.status === s ? 'selected' : '' %>><%= s %></option>
+        <% }); %>
+      </select>
+      <button type="submit" class="button small">Update</button>
+    </form>
   <% } %>
 </article>
 
