@@ -1,0 +1,47 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<h1>Browse jobs</h1>
+
+<form action="/jobs" method="GET" class="search-form">
+  <input type="text" name="q" placeholder="Search title or description" value="<%= query.q || '' %>">
+  <select name="location">
+    <option value="">Any location</option>
+    <% LOCATIONS.forEach(function (loc) { %>
+      <option value="<%= loc %>" <%= query.location === loc ? 'selected' : '' %>><%= loc %></option>
+    <% }); %>
+  </select>
+  <select name="type">
+    <option value="">Any type</option>
+    <% JOB_TYPES.forEach(function (t) { %>
+      <option value="<%= t %>" <%= query.type === t ? 'selected' : '' %>><%= t %></option>
+    <% }); %>
+  </select>
+  <button type="submit" class="button small">Search</button>
+</form>
+
+<% if (!jobs.length) { %>
+  <p class="empty">No listings match your search.</p>
+<% } else { %>
+  <div class="job-grid">
+    <% jobs.forEach(function (job) { %>
+      <article class="job-card">
+        <div class="job-card-top">
+          <h2><a href="/jobs/<%= job._id %>"><%= job.title %></a></h2>
+          <p class="job-company"><%= job.employer.companyName %></p>
+        </div>
+        <p class="job-desc"><%= job.description.length > 130 ? job.description.slice(0, 130) + '…' : job.description %></p>
+        <div class="job-tags">
+          <span class="tag"><%= job.type %></span>
+          <span class="tag"><%= job.location %></span>
+        </div>
+        <div class="job-card-footer">
+          <span class="job-deadline">Apply by <%= job.deadline.toDateString() %></span>
+          <a href="/jobs/<%= job._id %>" class="button small">View</a>
+        </div>
+      </article>
+    <% }); %>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>

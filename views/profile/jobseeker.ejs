@@ -1,0 +1,26 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<section class="form-page">
+  <h1>My profile</h1>
+  <form action="/profile?_method=PUT" method="POST" novalidate>
+    <label for="name">Full name</label>
+    <input id="name" name="name" type="text" value="<%= seeker.name %>" required>
+
+    <label for="phone">Phone</label>
+    <input id="phone" name="phone" type="text" value="<%= seeker.phone || '' %>">
+
+    <label for="skills">Skills (comma separated)</label>
+    <input id="skills" name="skills" type="text" value="<%= seeker.skills.join(', ') %>">
+
+    <label for="education">Education</label>
+    <textarea id="education" name="education"><%= seeker.education || '' %></textarea>
+
+    <label for="experience">Experience</label>
+    <textarea id="experience" name="experience"><%= seeker.experience || '' %></textarea>
+
+    <button type="submit" class="button">Save changes</button>
+  </form>
+</section>
+
+<%- include('../partials/footer') %>

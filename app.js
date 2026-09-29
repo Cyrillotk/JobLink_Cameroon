@@ -41,7 +41,9 @@ app.use(locals);
 
 app.use('/', require('./routes/index.routes'));
 app.use('/', require('./routes/auth.routes'));
-
+app.use('/', require('./routes/job.routes'));
+app.use('/', require('./routes/application.routes'));
+app.use('/', require('./routes/profile.routes'));
 app.use(notFound);
 app.use(errorHandler);
 

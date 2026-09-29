@@ -1,0 +1,26 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<section class="form-page">
+  <h1>My company profile</h1>
+  <form action="/profile?_method=PUT" method="POST" novalidate>
+    <label for="companyName">Company name</label>
+    <input id="companyName" name="companyName" type="text" value="<%= employer.companyName %>" required>
+
+    <label for="phone">Phone</label>
+    <input id="phone" name="phone" type="text" value="<%= employer.phone || '' %>">
+
+    <label for="location">Location</label>
+    <input id="location" name="location" type="text" list="locations" value="<%= employer.location %>" required>
+    <datalist id="locations">
+      <% LOCATIONS.forEach(function (loc) { %><option value="<%= loc %>"><% }); %>
+    </datalist>
+
+    <label for="description">About your company</label>
+    <textarea id="description" name="description"><%= employer.description || '' %></textarea>
+
+    <button type="submit" class="button">Save changes</button>
+  </form>
+</section>
+
+<%- include('../partials/footer') %>

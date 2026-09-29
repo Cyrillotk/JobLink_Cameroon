@@ -1,5 +1,9 @@
-<header class="site-header">
+<button class="sidebar-toggle" type="button" aria-label="Toggle menu"
+  onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+
+<aside class="sidebar" id="sidebar">
   <a class="brand" href="/">JobLink<span>Cameroon</span></a>
+
   <nav>
     <% if (currentUser) { %>
       <a href="/dashboard">Dashboard</a>
@@ -9,15 +13,21 @@
       <% } else if (currentUser.role === ROLES.JOBSEEKER) { %>
         <a href="/applications">My applications</a>
       <% } %>
-      <form action="/logout" method="POST" class="inline">
-        <button type="submit" class="link-button">Sign out</button>
-      </form>
+      <a href="/profile">My profile</a>
     <% } else { %>
-      <a href="/jobs">Browse jobs</a>
+      <a href="/jobs">Jobs</a>
       <a href="/login">Sign in</a>
-      <a href="/register" class="button small">Create account</a>
+      <a href="/register">Register</a>
     <% } %>
   </nav>
-</header>
+
+  <% if (currentUser) { %>
+    <form action="/logout" method="POST" class="sidebar-signout">
+      <button type="submit" class="link-button">Sign out</button>
+    </form>
+  <% } %>
+</aside>
+
+<div class="app-content">
 <main>
 <%- include('flash') %>

@@ -1,0 +1,37 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<section class="form-page">
+  <h1>Post a job or internship</h1>
+  <form action="/jobs" method="POST" novalidate>
+    <label for="title">Title</label>
+    <input id="title" name="title" type="text" value="<%= formData.title || '' %>" required>
+
+    <label for="description">Description</label>
+    <textarea id="description" name="description" required><%= formData.description || '' %></textarea>
+
+    <label for="requirements">Requirements</label>
+    <textarea id="requirements" name="requirements"><%= formData.requirements || '' %></textarea>
+
+    <label for="location">Location</label>
+    <input id="location" name="location" type="text" list="locations" value="<%= formData.location || '' %>" required>
+    <datalist id="locations">
+      <% LOCATIONS.forEach(function (loc) { %><option value="<%= loc %>"><% }); %>
+    </datalist>
+
+    <label for="type">Type</label>
+    <select id="type" name="type" required>
+      <option value="">Choose a type</option>
+      <% JOB_TYPES.forEach(function (t) { %>
+        <option value="<%= t %>" <%= formData.type === t ? 'selected' : '' %>><%= t %></option>
+      <% }); %>
+    </select>
+
+    <label for="deadline">Application deadline</label>
+    <input id="deadline" name="deadline" type="date" value="<%= formData.deadline || '' %>" required>
+
+    <button type="submit" class="button">Publish listing</button>
+  </form>
+</section>
+
+<%- include('../partials/footer') %>

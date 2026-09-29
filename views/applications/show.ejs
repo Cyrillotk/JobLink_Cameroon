@@ -1,0 +1,23 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<article class="job-detail">
+  <h1>Application for <%= application.job.title %></h1>
+  <p class="job-meta">
+    Status: <span class="pill pill-<%= application.status.toLowerCase() %>"><%= application.status %></span>
+  </p>
+  <p class="job-meta">Applied on <%= application.date.toDateString() %></p>
+
+  <h2>Cover letter</h2>
+  <p><%= application.coverLetter %></p>
+
+  <% if (currentUser.role === ROLES.EMPLOYER) { %>
+    <h2>Applicant</h2>
+    <p><%= application.jobSeeker.name %> — <%= application.jobSeeker.email %></p>
+    <% if (application.jobSeeker.skills && application.jobSeeker.skills.length) { %>
+      <p>Skills: <%= application.jobSeeker.skills.join(', ') %></p>
+    <% } %>
+  <% } %>
+</article>
+
+<%- include('../partials/footer') %>

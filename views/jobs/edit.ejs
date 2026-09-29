@@ -1,0 +1,42 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<section class="form-page">
+  <h1>Edit listing</h1>
+  <form action="/jobs/<%= job._id %>?_method=PUT" method="POST" novalidate>
+    <label for="title">Title</label>
+    <input id="title" name="title" type="text" value="<%= job.title %>" required>
+
+    <label for="description">Description</label>
+    <textarea id="description" name="description" required><%= job.description %></textarea>
+
+    <label for="requirements">Requirements</label>
+    <textarea id="requirements" name="requirements"><%= job.requirements || '' %></textarea>
+
+    <label for="location">Location</label>
+    <input id="location" name="location" type="text" list="locations" value="<%= job.location %>" required>
+    <datalist id="locations">
+      <% LOCATIONS.forEach(function (loc) { %><option value="<%= loc %>"><% }); %>
+    </datalist>
+
+    <label for="type">Type</label>
+    <select id="type" name="type" required>
+      <% JOB_TYPES.forEach(function (t) { %>
+        <option value="<%= t %>" <%= job.type === t ? 'selected' : '' %>><%= t %></option>
+      <% }); %>
+    </select>
+
+    <label for="deadline">Application deadline</label>
+    <input id="deadline" name="deadline" type="date" value="<%= job.deadline.toISOString().slice(0,10) %>" required>
+
+    <label for="status">Status</label>
+    <select id="status" name="status">
+      <option value="active" <%= job.status === 'active' ? 'selected' : '' %>>Active</option>
+      <option value="closed" <%= job.status === 'closed' ? 'selected' : '' %>>Closed</option>
+    </select>
+
+    <button type="submit" class="button">Save changes</button>
+  </form>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,23 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<h1>My applications</h1>
+
+<% if (!applications.length) { %>
+  <p class="empty">You haven't applied anywhere yet. <a href="/jobs">Browse open roles</a>.</p>
+<% } else { %>
+  <table>
+    <thead><tr><th>Job</th><th>Status</th><th>Applied</th></tr></thead>
+    <tbody>
+      <% applications.forEach(function (app) { %>
+        <tr>
+          <td><a href="/jobs/<%= app.job._id %>"><%= app.job.title %></a></td>
+          <td><span class="pill pill-<%= app.status.toLowerCase() %>"><%= app.status %></span></td>
+          <td><%= app.date.toDateString() %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include('../partials/footer') %>

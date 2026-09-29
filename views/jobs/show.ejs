@@ -1,0 +1,68 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<article class="job-detail">
+  <h1><%= job.title %></h1>
+  <p class="job-meta"><%= job.employer.companyName %> · <%= job.location %> · <%= job.type %></p>
+  <p class="job-deadline">
+    Apply by <%= job.deadline.toDateString() %> · <span class="pill pill-<%= job.status %>"><%= job.status %></span>
+  </p>
+
+  <h2>Description</h2>
+  <p><%= job.description %></p>
+
+  <% if (job.requirements) { %>
+    <h2>Requirements</h2>
+    <p><%= job.requirements %></p>
+  <% } %>
+
+  <% if (currentUser && currentUser.role === ROLES.JOBSEEKER) { %>
+    <% if (alreadyApplied) { %>
+      <p class="notice notice-success">You have already applied to this listing.</p>
+    <% } else if (!job.isOpen) { %>
+      <p class="empty">This listing is no longer accepting applications.</p>
+    <% } else { %>
+      <h2>Apply</h2>
+      <form action="/jobs/<%= job._id %>/apply" method="POST">
+        <label for="coverLetter">Cover letter</label>
+        <textarea id="coverLetter" name="coverLetter" required
+          placeholder="A few sentences on why you're a fit."></textarea>
+        <button type="submit" class="button">Submit application</button>
+      </form>
+    <% } %>
+  <% } %>
+
+  <% if (currentUser && currentUser.role === ROLES.EMPLOYER && job.employer._id.toString() === currentUser.employerId) { %>
+    <p class="aside"><a href="/jobs/<%= job._id %>/edit">Edit this listing</a></p>
+
+    <h2>Applicants</h2>
+    <% if (!applications.length) { %>
+      <p class="empty">No applications yet.</p>
+    <% } else { %>
+      <table>
+        <thead><tr><th>Name</th><th>Status</th><th>Applied</th><th>Update</th></tr></thead>
+        <tbody>
+          <% applications.forEach(function (app) { %>
+            <tr>
+              <td><a href="/applications/<%= app._id %>"><%= app.jobSeeker.name %></a></td>
+              <td><span class="pill pill-<%= app.status.toLowerCase() %>"><%= app.status %></span></td>
+              <td><%= app.date.toDateString() %></td>
+              <td>
+                <form action="/applications/<%= app._id %>/status?_method=PUT" method="POST" class="inline-form">
+                  <select name="status">
+                    <% ['Pending','Reviewed','Shortlisted','Accepted','Rejected'].forEach(function (s) { %>
+                      <option value="<%= s %>" <%= app.status === s ? 'selected' : '' %>><%= s %></option>
+                    <% }); %>
+                  </select>
+                  <button type="submit" class="button small">Update</button>
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  <% } %>
+</article>
+
+<%- include('../partials/footer') %>
